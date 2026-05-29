@@ -3,12 +3,11 @@ import API from "./api";
 import "./App.css";
 import ContactForm from "./ContactForm";
 import ContactList from "./ContactList";
+
 const App = () => {
   const [contacts, setContacts] = useState([]);
   const [editContact, setEditContact] = useState(null);
 
-  console.log(editContact);
-  //Load all Contacts
   const fetchContacts = async () => {
     const res = await API.get("/");
     setContacts(res.data);
@@ -18,19 +17,16 @@ const App = () => {
     fetchContacts();
   }, []);
 
-  //Add new Contact
   const addContact = async (data) => {
     await API.post("/", data);
     fetchContacts();
   };
 
-  //Delete Contact
   const deleteContact = async (id) => {
     await API.delete(`/${id}`);
     fetchContacts();
   };
 
-  //Update Contact
   const updateContact = async (data) => {
     await API.put(`/${editContact._id}`, data);
     setEditContact(null);
@@ -38,16 +34,29 @@ const App = () => {
   };
 
   return (
-    <div>
-      <ContactForm
-        onSubmit={editContact ? updateContact : addContact}
-        existing={editContact}
-      />
-      <ContactList
-        contacts={contacts}
-        onDelete={deleteContact}
-        onEdit={setEditContact}
-      />
+    <div className="app-shell">
+      <div className="app-card">
+        <section className="panel panel-form">
+          <div className="panel-header">
+            <h1>Add Contact</h1>
+          </div>
+          <ContactForm
+            onSubmit={editContact ? updateContact : addContact}
+            existing={editContact}
+          />
+        </section>
+
+        <section className="panel panel-list">
+          <div className="panel-header">
+            <h1>All Contacts</h1>
+          </div>
+          <ContactList
+            contacts={contacts}
+            onDelete={deleteContact}
+            onEdit={setEditContact}
+          />
+        </section>
+      </div>
     </div>
   );
 };
