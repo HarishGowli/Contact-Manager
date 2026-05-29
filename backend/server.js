@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 const connectDB = require("./config/db");
 const Contact = require("./Contact");
 
@@ -35,5 +36,6 @@ app.delete("/api/contacts/:id", async (req, res) => {
   await Contact.findByIdAndDelete(req.params.id);
   res.send({ message: "Deleted" });
 });
+
 
 app.listen(5000, () => console.log("Server running on port 5000"));

@@ -7,9 +7,9 @@ const ContactForm = ({ onSubmit, existing }) => {
 
   useEffect(() => {
     if (existing) {
-      setName(existing.name);
-      setPhone(existing.phone);
-      setEmail(existing.email);
+      setName(existing.name || "");
+      setPhone(existing.phone || "");
+      setEmail(existing.email || "");
     }
   }, [existing]);
 
@@ -20,29 +20,42 @@ const ContactForm = ({ onSubmit, existing }) => {
     setPhone("");
     setEmail("");
   };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={name}
-        required
-        placeholder="Name:"
-        onChange={(e) => setName(e.target.value)}
-      />
-      <input
-        type="text"
-        value={phone}
-        required
-        placeholder="Phone:"
-        onChange={(e) => setPhone(e.target.value)}
-      />
-      <input
-        type="email"
-        value={email}
-        required
-        placeholder="Email:"
-        onChange={(e) => setEmail(e.target.value)}
-      />
+    <form className="contact-form" onSubmit={handleSubmit}>
+      <div className="field">
+        <label htmlFor="name">Name:</label>
+        <input
+          id="name"
+          type="text"
+          value={name}
+          required
+          placeholder="Enter Name"
+          onChange={(e) => setName(e.target.value)}
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="phone">Phone:</label>
+        <input
+          id="phone"
+          type="text"
+          value={phone}
+          required
+          placeholder="Enter Phone Number"
+          onChange={(e) => setPhone(e.target.value)}
+        />
+      </div>
+      <div className="field">
+        <label htmlFor="email">Email:</label>
+        <input
+          id="email"
+          type="email"
+          value={email}
+          required
+          placeholder="Enter Email Address"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
       <button type="submit">{existing ? "Update" : "Add"}</button>
     </form>
   );

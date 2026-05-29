@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-
+// import mongoose from "mongoose";
 const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/Contact-Manager");
+    await mongoose.connect(process.env.MONGO_DB);
     console.log("DB CONNECTED");
   } catch (err) {
     console.log("DB ERROR", err);
